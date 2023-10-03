@@ -11,6 +11,7 @@
 		AC90C9342ACC9A9A004A6CD8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC90C9332ACC9A9A004A6CD8 /* ContentView.swift */; };
 		AC90C9362ACC9A9B004A6CD8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC90C9352ACC9A9B004A6CD8 /* Assets.xcassets */; };
 		AC90C9392ACC9A9B004A6CD8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC90C9382ACC9A9B004A6CD8 /* Preview Assets.xcassets */; };
+		AC90C9412ACC9AED004A6CD8 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = AC90C9402ACC9AED004A6CD8 /* Lottie */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC90C9412ACC9AED004A6CD8 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +85,9 @@
 			dependencies = (
 			);
 			name = MarvelApp;
+			packageProductDependencies = (
+				AC90C9402ACC9AED004A6CD8 /* Lottie */,
+			);
 			productName = MarvelApp;
 			productReference = AC90C92E2ACC9A9A004A6CD8 /* MarvelApp.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +116,9 @@
 				Base,
 			);
 			mainGroup = AC90C9252ACC9A9A004A6CD8;
+			packageReferences = (
+				AC90C93F2ACC9AEC004A6CD8 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+			);
 			productRefGroup = AC90C92F2ACC9A9A004A6CD8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -339,6 +347,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AC90C93F2ACC9AEC004A6CD8 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AC90C9402ACC9AED004A6CD8 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC90C93F2ACC9AEC004A6CD8 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = AC90C9262ACC9A9A004A6CD8 /* Project object */;
 }
