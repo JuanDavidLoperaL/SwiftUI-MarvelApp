@@ -8,18 +8,32 @@
 import SwiftUI
 
 struct SplashScreen: View {
+    
+    @State private var navigateToHome = false
+    
     var body: some View {
-        ZStack(alignment: .center) {
-            MarvelAnimationView(loopMode: .loop)
-                .scaleEffect(0.5)
-            VStack(alignment: .center,
-                   spacing: 10.0) {
-                Spacer()
-                Spacer()
-                Text("Marvel App")
-                    .foregroundColor(.white)
-                    .font(.system(size: 50.0, weight: .bold, design: .rounded))
-                Spacer()
+        NavigationView {
+            ZStack(alignment: .center) {
+                NavigationLink(isActive: $navigateToHome) {
+                    HomeView()
+                } label: {}
+
+                MarvelAnimationView(loopMode: .loop)
+                    .scaleEffect(0.5)
+                VStack(alignment: .center,
+                       spacing: 10.0) {
+                    Spacer()
+                    Spacer()
+                    Text("Marvel App")
+                        .foregroundColor(.white)
+                        .font(.system(size: 50.0, weight: .bold, design: .rounded))
+                    Spacer()
+                }
+            }
+        }
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                self.navigateToHome = true
             }
         }
     }
