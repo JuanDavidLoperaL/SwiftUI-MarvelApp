@@ -9,30 +9,47 @@ import SwiftUI
 
 struct HomeView: View {
     
+    @ObservedObject var viewModel: HomeViewModel = HomeViewModel()
+    
     var body: some View {
         ScrollView(.horizontal,
                    showsIndicators: false)
         {
             HStack(spacing: 0.0) {
-                ForEach(0..<5) { number in
+                ForEach(viewModel.characters) { marvelCharacter in
                     GeometryReader { geometry in
-                        let scale: CGFloat = getScale(geometryProxy: geometry)
-                        buildCard(number: number,
+                        let isGhost: Bool = marvelCharacter.isGhost ?? false
+                        let opacity: Double = isGhost ? 0.0 : 1.0
+                        let scale: CGFloat = isGhost ? 0.0 : getScale(geometryProxy: geometry)
+                        let imageURL: URL? = URL(string: "\(marvelCharacter.thumbnail.imagePath).\(marvelCharacter.thumbnail.imageExtension)")
+                        buildCard(character: marvelCharacter,
                                   geometryProxy: geometry,
-                                  scale: scale)
+                                  scale: scale,
+                                  imageURL: imageURL)
+                        .opacity(opacity)
+                        .frame(width: UIScreen.main.bounds.width * 0.7, height: UIScreen.main.bounds.height * 0.7)
+                        
                     }
-                    .frame(width: 200.0, height: 400.0)
-                    .padding([.horizontal, .vertical], 32.0)
+                    .frame(width: UIScreen.main.bounds.width)
+                    .padding([.horizontal, .vertical], 50.0)
                 }
             }
         }
+        .background(Color.black.opacity(1))
+        .onAppear {
+            viewModel.fetchCharacters()
+        }
     }
     
-    private func buildCard(number: Int, geometryProxy: GeometryProxy, scale: CGFloat) -> some View {
+    private func buildCard(character: Characters,
+                           geometryProxy: GeometryProxy,
+                           scale: CGFloat,
+                           imageURL: URL?) -> some View {
         VStack(alignment: .center, spacing: 10.0) {
-            Text("Character \(number + 1)")
-                .font(.system(size: 25.0, weight: .bold, design: .rounded))
-            Image("placeHolderImage")
+            Text("Character \(character.name)")
+                .font(.system(size: 17.0, weight: .bold, design: .rounded))
+                .foregroundColor(Color.white)
+            AsyncImage(url: imageURL!)
                 .scaledToFill()
                 .frame(width: geometryProxy.size.width * 0.70, height: geometryProxy.size.height * 0.60)
                 .clipped()
@@ -42,8 +59,8 @@ struct HomeView: View {
                         .stroke(Color(white: 0.4))
                 )
                 .shadow(radius: 7)
-                .padding()
-            Text("Brief Description Here")
+            Text(character.description)
+                .foregroundColor(Color.white)
             Button("See more") {
                 print("button tapped")
             }
@@ -53,13 +70,13 @@ struct HomeView: View {
     }
     
     private func getScale(geometryProxy: GeometryProxy) -> CGFloat {
-        let midPoint: CGFloat = 120.0
+        let midPoint: CGFloat = 100.0
         let viewFrame = geometryProxy.frame(in: .global)
         var scale: CGFloat = 1.0
-        let detalXAnimationThreshold: CGFloat = 120.0
+        let detalXAnimationThreshold: CGFloat = 80.0
         let diffFromCenter = abs(midPoint - viewFrame.origin.x - detalXAnimationThreshold / 2)
         if diffFromCenter < detalXAnimationThreshold {
-            scale = 1 + (detalXAnimationThreshold - diffFromCenter) / 500
+            scale = 1 + (detalXAnimationThreshold - diffFromCenter) / 450
         }
         return scale
     }
